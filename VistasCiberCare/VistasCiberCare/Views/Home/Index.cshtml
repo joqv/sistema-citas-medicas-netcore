@@ -1,0 +1,137 @@
+﻿@{
+    ViewData["Title"] = "CiberCare";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Bienvenido a CiberCare</h1>
+</div>
+@{
+    var bloques = new[]
+    {
+        new {
+            Id = 1,
+            Imagen = Url.Content("~/img/Pacientes.jpg"),
+            Titulo = "Pacientes",
+            Texto = "En este botón encontrarás 8 Botones: Ingresar la cual tiene campos obligatorios. Descargar Execl:el cual genera un documento en el formato execl de todos los datos de la tabla. Exportar PDf: el cual genera un Pdf con todos los datos pero uno en cada hoja. Flechita:esa permite regresar a la tabla principal luego de haber utilizado el boton de bscar. Buscar (filtra por DNI), Editar (modifica datos), Detalles (muestra datos específicos) y Eliminar (con confirmación previa)."
+        },
+        new {
+            Id = 2,
+            Imagen = Url.Content("~/img/especialidades.jpeg"),
+            Titulo = "Especialidades",
+            Texto = "Este botón ofrece 4 funciones: Agregar, Editar, Detalles y Eliminar. Todas las acciones están centradas en la gestión de especialidades médicas."
+        },
+        new {
+            Id = 3,
+            Imagen = Url.Content("~/img/doctores.jpg"),
+            Titulo = "Doctores",
+            Texto = "Aquí podrás Agregar. Flechita:esa permite regresar a la tabla principal luego de haber utilizado el boton de bscar. Buscar (por nombre), Editar, Ver Detalles y Eliminar registros de doctores, con verificación antes de eliminar."
+        },
+        new {
+            Id = 4,
+            Imagen = Url.Content("~/img/horario.jpg"),
+            Titulo = "Horarios",
+            Texto = "Incluye funciones para Agregar.Exportar PDf: el cual genera un Pdf con todos los datos pero uno en cada hoja. Flechita:esa permite regresar a la tabla principal luego de haber utilizado el boton de bscar. Buscar (por hora), Editar, Detallar y Eliminar horarios médicos con verificación previa."
+        },
+        new {
+            Id = 5,
+            Imagen = Url.Content("~/img/citas.png"),
+            Titulo = "Citas",
+            Texto = "Gestiona citas con 9 funciones: Agregar,Descargar Execl:el cual genera un documento en el formato execl de todos los datos de la tabla. Exportar PDf: el cual genera un Pdf con todos los datos pero uno en cada hoja. Flechita:esa permite regresar a la tabla principal luego de haber utilizado el boton de bscar. Buscar (por DNI), Editar, Detalles, Eliminar (con confirmación) y generar Reporte en Excel de cada uno de los datos sen el que escogas."
+        }
+    };
+}
+
+
+<div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4">
+        @foreach (var b in bloques)
+        {
+            <div class="col">
+                <div class="card h-100 block-card" data-bs-toggle="modal" data-bs-target="#modalBlock@b.Id" style="cursor:pointer;">
+                    <img src="@b.Imagen" class="card-img-top" alt="Imagen @b.Id">
+                    <div class="card-body">
+                        <h5 class="card-title">@b.Titulo</h5>
+                        <p class="card-text">@b.Texto</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="modalBlock@b.Id" tabindex="-1" aria-labelledby="modalLabel@b.Id" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalLabel@b.Id">@b.Titulo</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="@b.Imagen" class="img-fluid mb-3" alt="Imagen grande @b.Id">
+                            <p>@b.Texto</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="container mt-5">
+    <h4 class="text-center">Top 5 horarios más elegidos</h4>
+    <canvas id="chartHorarios" height="100"></canvas>
+</div>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        async function cargarGrafico() {
+            try {
+                const response = await fetch('@Url.Action("GetTopHorarios", "Citas")');
+                const data = await response.json();
+
+                if (!data || data.length === 0) {
+                    document.getElementById('chartHorarios').replaceWith("No hay datos para mostrar.");
+                    return;
+                }
+
+                const labels = data.map(d => d.Hora);
+                const cantidades = data.map(d => d.Cantidad);
+
+                const ctx = document.getElementById('chartHorarios').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Cantidad de citas',
+                            data: cantidades,
+                            backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Citas'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Hora'
+                                }
+                            }
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error("Error cargando el gráfico:", error);
+            }
+        }
+
+        cargarGrafico();
+    </script>
+}

@@ -1,0 +1,130 @@
+﻿@model VistasCiberCare.Models.Citas
+
+@{
+    ViewData["Title"] = "Insert";
+}
+
+<h1>Insertar Nueva Cita</h1>
+
+<h4>Citas</h4>
+<hr />
+@if (ViewBag.mensaje != null)
+{
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        @ViewBag.mensaje
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Insert">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <!-- Combo de pacientes -->
+            <div class="form-group">
+                <label for="dni_paciente">DNI Paciente</label>
+                <select id="dni_paciente" name="dni_paciente" class="form-control" onchange="actualizarPaciente()">
+                    @{
+                        var pacientes = ViewBag.Pacientes as IEnumerable<dynamic>;
+                    }
+
+                    @if (pacientes != null)
+                    {
+                        foreach (var p in pacientes)
+                        {
+                            <option value="@p.Value" data-nombre="@p.Nombre">@p.Text</option>
+                        }
+                    }
+                    else
+                    {
+                        <option>Sin datos</option>
+                    }
+                </select>
+
+            </div>
+
+            <div class="form-group">
+                <label>Nombre del Paciente</label>
+                <input type="text" id="nombre_paciente" name="nombre_paciente" class="form-control" readonly />
+            </div>
+
+            <!-- Combo de horarios -->
+            <div class="form-group">
+                <label for="id_horario">Horario</label>
+                <select id="id_horario" name="id_horario" class="form-control" onchange="actualizarHorario()">
+
+                    @{
+                        var horarios = ViewBag.Horarios as IEnumerable<dynamic>;
+                    }
+                    @if (horarios != null)
+                    {
+                        foreach (var h in horarios)
+                        {
+                            <option value="@h.Value"
+                                    data-fecha="@h.Fecha"
+                                    data-hora="@h.Hora"
+                                    data-doctor="@h.Doctor"
+                                    data-especialidad="@h.Especialidad">
+                                @h.Text
+                            </option>
+                        }
+                    }
+                    else
+                    {
+                        <option>No hay horarios disponibles</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Fecha</label>
+                <input type="text" id="fecha" name="fecha" class="form-control" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Hora</label>
+                <input type="text" id="hora" name="hora" class="form-control" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Doctor</label>
+                <input type="text" id="nombre_doctor" name="nombre_doctor" class="form-control" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Especialidad</label>
+                <input type="text" id="especialidad" name="especialidad" class="form-control" readonly />
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar Cita</button>
+            <a asp-action="Index" class="btn btn-secondary ml-2">Volver a la tabla</a>
+
+
+        </form>
+    </div>
+</div>
+
+
+<script>
+    function actualizarPaciente() {
+        var select = document.getElementById("dni_paciente");
+        var selected = select.options[select.selectedIndex];
+        document.getElementById("nombre_paciente").value = selected.getAttribute("data-nombre");
+    }
+
+    function actualizarHorario() {
+        var select = document.getElementById("id_horario");
+        var selected = select.options[select.selectedIndex];
+
+        document.getElementById("fecha").value = selected.getAttribute("data-fecha");
+        document.getElementById("hora").value = selected.getAttribute("data-hora");
+        document.getElementById("nombre_doctor").value = selected.getAttribute("data-doctor");
+        document.getElementById("especialidad").value = selected.getAttribute("data-especialidad");
+    }
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

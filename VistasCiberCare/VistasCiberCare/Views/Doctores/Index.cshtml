@@ -1,0 +1,70 @@
+﻿@model IEnumerable<VistasCiberCare.Models.DoctoresDto>
+
+@{
+    ViewData["Title"] = "Listado de Doctores";
+}
+
+<h1 class="mb-4">Tabla de Doctores</h1>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <a href="/Doctores/Insert" class="btn btn-info btn-lg">
+        <i class="bi bi-plus-circle"></i> Ingresar nuevo Doctor
+    </a>
+    <div class="d-flex align-items-center" style="gap: 0;">
+        <a asp-action="Index" class="btn btn-secondary me-1">
+            <i class="fa-solid fa-reply"></i>
+        </a>
+    <form asp-action="Index" method="get" class="d-flex" style="max-width: 400px;">
+        <input type="text" name="nombre" value="@ViewBag.NombreBusqueda" class="form-control me-2" placeholder="Ingrese nombre" />
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+    </div>
+</div>
+
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered align-middle">
+        <thead class="table-primary">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.id_doctor)</th>
+                <th>@Html.DisplayNameFor(model => model.nombre)</th>
+                <th>@Html.DisplayNameFor(model => model.apellido)</th>
+                <th>@Html.DisplayNameFor(model => model.id_especialidad)</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.id_doctor)</td>
+                    <td>@Html.DisplayFor(modelItem => item.nombre)</td>
+                    <td>@Html.DisplayFor(modelItem => item.apellido)</td>
+                    <td>@Html.DisplayFor(modelItem => item.id_especialidad)</td>
+                    <td>
+                        <a href="/Doctores/Edit/@item.id_doctor" class="btn btn-sm btn-primary me-1">
+                             <i class="fa-solid fa-pen"></i>Editar
+                        </a>
+                        <a href="/Doctores/Details/@item.id_doctor" class="btn btn-sm btn-info text-white me-1">
+                           <i class="fa-solid fa-magnifying-glass"></i> Detalles
+                        </a>
+                        <a href="/Doctores/Delete/@item.id_doctor" class="btn btn-sm btn-danger"
+                           onclick="return confirm('¿Estás seguro de eliminar este doctor?');">
+                           <i class="fa-solid fa-trash"></i> Eliminar
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        @for (int i = 1; i <= Math.Ceiling((double)ViewBag.TotalItems / ViewBag.PageSize); i++)
+        {
+            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                <a class="page-link" href="?page=@i&pageSize=@ViewBag.PageSize">@i</a>
+            </li>
+        }
+    </ul>
+</nav>

@@ -1,0 +1,39 @@
+﻿@model VistasCiberCare.Models.Admin
+@{
+    Layout = "~/Views/Shared/_Layoutlogin.cshtml";
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @Html.ValidationSummary()
+    </div>
+}
+
+@if (TempData["mensaje"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["mensaje"]
+    </div>
+}
+
+form asp-action="Index" method="post">
+
+<form asp-action="Index" method="post">
+    <div class="form-group">
+        <label asp-for="usuario">Usuario</label>
+        <input asp-for="usuario" class="form-control" />
+        <span asp-validation-for="usuario" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="contrasena">Contraseña</label>
+        <input asp-for="contrasena" type="password" class="form-control" />
+        <span asp-validation-for="contrasena" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+</form>
+
+
+

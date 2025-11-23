@@ -1,0 +1,68 @@
+﻿@model VistasCiberCare.Models.Horarios
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Editar Horario</h1>
+
+<h4>Horarios</h4>
+<hr />
+@if (ViewBag.mensaje != null)
+{
+    <div class="alert alert-info">
+        @ViewBag.mensaje
+    </div>
+}
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="id_horario" class="control-label"></label>
+                <input asp-for="id_horario" class="form-control" readonly />
+                <span asp-validation-for="id_horario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fecha" class="control-label"></label>
+                <input asp-for="fecha" class="form-control" />
+                <span asp-validation-for="fecha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="hora" class="control-label"></label>
+                <input asp-for="hora" class="form-control" />
+                <span asp-validation-for="hora" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="id_doctor" class="control-label"></label>
+                <input asp-for="id_doctor" class="form-control" readonly asp-items="ViewBag.Doctores">
+                <span asp-validation-for="id_doctor" class="text-danger"></span>
+            </div>
+                        <div class="form-group">
+                <label asp-for="apellido" class="control-label"></label>
+                <input asp-for="apellido" class="form-control" readonly asp-items="ViewBag.Doctores">
+                <span asp-validation-for="apellido" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="disponible" class="control-label"></label>
+                <input asp-for="disponible" class="form-control" />
+                <span asp-validation-for="disponible" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="id_especialidad" class="control-label" asp-items="ViewBag.Especialidades"></label>
+                <input asp-for="id_especialidad" class="form-control" readonly>
+                <span asp-validation-for="id_especialidad" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-primary">Retornar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

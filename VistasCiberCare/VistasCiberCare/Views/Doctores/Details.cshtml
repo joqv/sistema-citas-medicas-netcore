@@ -1,0 +1,47 @@
+﻿@model VistasCiberCare.Models.Doctores
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalles de Doctor</h1>
+
+<div>
+    <h4>Doctores</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.id_doctor)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.id_doctor)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.apellido)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.apellido)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.id_especialidad)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.id_especialidad)
+        </dd>
+        <dt class="col-sm-2">
+            Nombre Especialidad
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.NombreEspecialidad
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index" class="btn btn-primary">Retornar</a>
+</div>

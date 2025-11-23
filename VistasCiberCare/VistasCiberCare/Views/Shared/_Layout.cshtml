@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - VistasCiberCare</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/VistasCiberCare.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="sidebar d-flex flex-column" color="paleturquoise">
+        <a href="/" class="logo-link">
+            <img src="~/img/CiberCareLogo.png" alt="CiberCare Logo" class="logo-img" />
+        </a>
+        <nav class="nav flex-column">
+            <a class="nav-link" href="/Pacientes"><i class="fa-solid fa-circle-user"></i> Pacientes</a>
+            <a class="nav-link" href="/Especialidades"><i class="fa-solid fa-user-nurse"></i> Especialidades</a>
+            <a class="nav-link" href="/Doctores"><i class="fa-solid fa-stethoscope"></i> Doctores</a>
+            <a class="nav-link" href="/Horarios"><i class="fa-solid fa-calendar-days"></i> Horarios</a>
+            <a class="nav-link" href="/Citas"><i class="fa-solid fa-file-invoice"></i> Citas</a>
+        </nav>
+    </div>
+    <div class="main-content">
+        <header>
+        </header>
+        <div class="container pt-4">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+        <footer class="border-top footer text-muted mt-5">
+            <div class="container">
+                &copy; 2025 - VistasCiberCare - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+

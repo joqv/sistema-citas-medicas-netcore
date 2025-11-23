@@ -1,0 +1,52 @@
+﻿@model VistasCiberCare.Models.Pacientes
+@{
+    Layout = "~/Views/Shared/_Layoutlogin.cshtml";
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @Html.ValidationSummary()
+    </div>
+}
+
+@if (TempData["mensaje"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["mensaje"]
+    </div>
+}
+
+<form asp-action="Login" method="post">
+    <div class="form-group">
+        <label asp-for="dni">DNI</label>
+        <input asp-for="dni" class="form-control" />
+        <span asp-validation-for="dni" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="nombre">Nombre</label>
+        <input asp-for="nombre" class="form-control" />
+        <span asp-validation-for="nombre" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="apellido">Apellido</label>
+        <input asp-for="apellido" class="form-control" />
+        <span asp-validation-for="apellido" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="email">Correo</label>
+        <input asp-for="email" class="form-control" />
+        <span asp-validation-for="email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="contrasena">Contraseña</label>
+        <input asp-for="contrasena" type="password" class="form-control" />
+        <span asp-validation-for="contrasena" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+</form>

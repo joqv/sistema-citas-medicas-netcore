@@ -1,0 +1,126 @@
+﻿@model IEnumerable<VistasCiberCare.Models.Citas>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Tabla de Citas</h1>
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <a href="/Citas/Insert" class="btn btn-info btn-lg">
+        <i class="bi bi-plus-circle"></i> Ingresar nueva Cita
+    </a>
+
+    <a href="/Citas/ExportarExcel" class="btn btn-success btn-lg">
+        <i class="fa-solid fa-file-excel me-1"></i> Descargar Excel de Pacientes
+    </a>
+
+    <a href="/Citas/ExportarPdf" class="btn btn-danger">
+        <i class="fa-solid fa-file-pdf"></i> Exportar a PDF
+    </a>
+
+    <div class="d-flex align-items-center" style="gap: 0;">
+        <a asp-action="Index" class="btn btn-primary me-1">
+            <i class="fa-solid fa-reply"></i>
+        </a>
+        <form asp-action="Index" method="get" class="d-flex" style="max-width: 400px;">
+            <input type="text" name="dni" value="@ViewBag.DniBusqueda" class="form-control me-2" placeholder="Buscar por DNI" />
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+    </div>
+</div>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.id_cita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dni_paciente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombre_paciente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.id_horario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.hora)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombre_doctor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.especialidad)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_cita)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dni_paciente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombre_paciente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_horario)
+            </td>
+                <td>
+                    @item.fecha.ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.hora)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombre_doctor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.especialidad)
+            </td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a href="/Citas/Edit?dni=@item.dni_paciente" class="btn btn-sm btn-primary" title="Editar">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+
+                        <a href="/Citas/Details?dni=@item.dni_paciente" class="btn btn-sm btn-info text-white" title="Ver detalles">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </a>
+
+                        <a href="/Citas/Delete?id_cita=@item.id_cita" class="btn btn-sm btn-danger"
+                           onclick="return confirm('¿Estás seguro de eliminar esta cita?');" title="Eliminar">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+
+                        <a href="/Citas/ExportarCitaPdf?dni=@item.dni_paciente" class="btn btn-sm btn-danger text-white" title="Exportar PDF">
+                            <i class="fa-solid fa-file-pdf"></i>
+                        </a>
+                    </div>
+                </td>
+
+        </tr>
+}
+    </tbody>
+</table>
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        @for (int i = 1; i <= Math.Ceiling((double)ViewBag.TotalItems / ViewBag.PageSize); i++)
+        {
+            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                <a class="page-link" href="?page=@i&pageSize=@ViewBag.PageSize">@i</a>
+            </li>
+        }
+    </ul>
+</nav>
+

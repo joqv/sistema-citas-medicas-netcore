@@ -1,0 +1,49 @@
+﻿@model VistasCiberCare.Models.DoctoresDto
+
+@{
+    ViewData["Title"] = "Insert";
+}
+
+<h1>Insertar Nuevo Doctor</h1>
+
+<h4>DoctoresDto</h4>
+<hr />
+@if (ViewBag.mensaje != null)
+{
+    <div class="alert alert-info">
+        @ViewBag.mensaje
+    </div>
+}
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Insert">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>   
+            <div class="form-group">
+                <label asp-for="nombre" class="control-label"></label>
+                <input asp-for="nombre" class="form-control" />
+                <span asp-validation-for="nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="apellido" class="control-label"></label>
+                <input asp-for="apellido" class="form-control" />
+                <span asp-validation-for="apellido" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="id_especialidad" class="control-label"></label>
+                <select asp-for="id_especialidad" class="form-control" asp-items="ViewBag.Especialidades"></select>
+                <span asp-validation-for="id_especialidad" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex gap-2">
+                <input type="submit" value="Guardar" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-secondary">Volver</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

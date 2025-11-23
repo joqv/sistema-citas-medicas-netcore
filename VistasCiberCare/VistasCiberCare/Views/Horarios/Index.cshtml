@@ -1,0 +1,106 @@
+﻿@model IEnumerable<VistasCiberCare.Models.Horarios>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Tabla de Horario</h1>
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <a href="/Horarios/Insert" class="btn btn-info btn-lg">
+        <i class="bi bi-plus-circle"></i> Ingresar nuevo Horario
+    </a>
+
+    <a href="/horarios/ExportarHorariosPdf" class="btn btn-danger">
+        <i class="fa-solid fa-file-pdf me-1"></i> Exportar Horarios a PDF
+    </a>
+
+    <div class="d-flex align-items-center" style="gap: 0;">
+        <a asp-action="Index" class="btn btn-primary me-1">
+            <i class="fa-solid fa-reply"></i>
+        </a>
+        <form asp-action="Index" method="get" class="d-flex" style="max-width: 400px;">
+            <input type="time" name="hora" value="@ViewBag.HoraBusqueda" class="form-control me-2" />
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+    </div>
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.id_horario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.hora)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.id_doctor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.disponible)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.id_especialidad)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_horario)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fecha)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.hora)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_doctor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.apellido)
+            </td>
+            <td>
+                @Html.CheckBox("disponible", item.disponible, new { disabled = "disabled" })
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_especialidad)
+            </td>
+            <td>
+                    <a href="/Horarios/Edit/@item.id_horario" class="btn btn-sm btn-primary me-1">
+                       <i class="fa-solid fa-pen"></i> Editar
+                    </a>
+                    <a href="/Horarios/Details/@item.id_horario" class="btn btn-sm btn-info text-white me-1">
+                         <i class="fa-solid fa-magnifying-glass"></i>Detalles
+                    </a>
+                    <a href="/Horarios/Delete/@item.id_horario" class="btn btn-sm btn-danger"
+                       onclick="return confirm('¿Estás seguro de eliminar este Horario?');">
+                       <i class="fa-solid fa-trash"></i> Eliminar
+                    </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        @for (int i = 1; i <= Math.Ceiling((double)ViewBag.TotalItems / ViewBag.PageSize); i++)
+        {
+            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                <a class="page-link" href="?page=@i&pageSize=@ViewBag.PageSize">@i</a>
+            </li>
+        }
+    </ul>
+</nav>

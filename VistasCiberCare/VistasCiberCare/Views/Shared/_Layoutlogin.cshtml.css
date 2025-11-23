@@ -1,0 +1,71 @@
+﻿/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    color: #333333; /* Texto principal sobrio */
+    background-color: #F6F6F4; /* Fondo general claro y profesional */
+}
+
+/* ---------- Sidebar ---------- */
+.sidebar {
+    background-color: #E9EFEA; /* Verde neutro claro */
+    width: 250px;
+    min-height: 100vh;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    color: #333333;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+}
+
+/* Clase para el contenedor del enlace */
+.logo-link {
+    display: inline-block; /* Para que el enlace sea un bloque en línea */
+}
+
+/* Clase para la imagen */
+.logo-img {
+    width: 350px; /* Ajusta el tamaño de la imagen a 100px de ancho */
+    height: auto; /* Mantiene la proporción de la imagen */
+    max-width: 100%; /* Hace que la imagen no se sobrepase en su contenedor */
+}
+
+
+
+    .sidebar .navbar-brand {
+        color: #56A3A6;
+        font-weight: bold;
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .sidebar .nav-link {
+        color: #333333;
+        font-weight: 500;
+        margin-bottom: 12px;
+        display: block;
+        padding: 8px 12px;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: all 0.2s ease-in-out;
+    }
+
+        .sidebar .nav-link:hover {
+            background-color: #D5D8D6; 
+            padding-left: 16px;
+        }
+
+/* ---------- Main Content ---------- */
+.main-content {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    background-color: #FAFAF9; 
+    padding: 20px;
+    min-height: 100vh;
+    color: #333333;
+}
+

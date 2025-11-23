@@ -1,0 +1,110 @@
+﻿@model VistasCiberCare.Models.Citas
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Editar Cita</h1>
+
+<h4>Citas</h4>
+<hr />
+@if (ViewBag.mensaje != null)
+{
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        @ViewBag.mensaje
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+    <label for="id_cita">ID de la Cita</label>
+    <input type="text" name="id_cita" id="id_cita" class="form-control" value="@Model.id_cita" readonly />
+</div>
+
+            <div class="form-group">
+                <label asp-for="dni_paciente" class="control-label"></label>
+                <input asp-for="dni_paciente" class="form-control" readonly />
+                <span asp-validation-for="dni_paciente" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="nombre_paciente" class="control-label"></label>
+                <input asp-for="nombre_paciente" class="form-control" readonly />
+                <span asp-validation-for="nombre_paciente" class="text-danger"></span>
+            </div>
+                        <!-- Combo de horarios -->
+            <div class="form-group">
+    <label for="id_horario">Horario</label>
+    <select asp-for="id_horario" id="id_horario" name="id_horario" class="form-control" onchange="actualizarHorario()">
+
+
+      @{
+    var horarios = ViewBag.Horarios as IEnumerable<dynamic>;
+}
+@foreach (var h in horarios)
+{
+    string selectedAttr = h.Value == Model.id_horario ? "selected" : "";
+    @:<option value="@h.Value" data-fecha="@h.Fecha" data-hora="@h.Hora" data-doctor="@h.Doctor" data-especialidad="@h.Especialidad" @selectedAttr>@h.Text</option>
+}
+              
+
+
+    </select>
+</div>
+
+
+            <div class="form-group">
+                <label>Fecha</label>
+                <input type="text" id="fecha" name="fecha" class="form-control" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Hora</label>
+                <input type="text" id="hora" name="hora" class="form-control" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Doctor</label>
+                <input type="text" id="nombre_doctor" name="nombre_doctor" class="form-control" readonly />
+            </div>
+
+            <div class="form-group">
+                <label>Especialidad</label>
+                <input type="text" id="especialidad" name="especialidad" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary ml-2">Volver a la tabla</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function actualizarPaciente() {
+        var select = document.getElementById("dni_paciente");
+        var selected = select.options[select.selectedIndex];
+        document.getElementById("nombre_paciente").value = selected.getAttribute("data-nombre");
+    }
+
+   function actualizarHorario() {
+        var select = document.getElementById("id_horario");
+        var selected = select.options[select.selectedIndex];
+
+        document.getElementById("fecha").value = selected.getAttribute("data-fecha");
+        document.getElementById("hora").value = selected.getAttribute("data-hora");
+        document.getElementById("nombre_doctor").value = selected.getAttribute("data-doctor");
+        document.getElementById("especialidad").value = selected.getAttribute("data-especialidad");
+    }
+
+      window.onload = function () {
+          actualizarHorario(); // 👈
+      }
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

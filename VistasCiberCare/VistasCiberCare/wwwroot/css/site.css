@@ -1,0 +1,153 @@
+/* ---------- Base ---------- */
+html {
+    font-size: 16px;
+}
+
+body {
+    background-color: #F6F6F4; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333333;
+    margin-bottom: 60px;
+}
+
+/* ---------- Títulos ---------- */
+h1, h2, h3 {
+    color: #88B04B; 
+    border-bottom: 2px solid #D5D8D6; 
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+}
+
+/* ---------- Enlaces ---------- */
+a {
+    color: #56A3A6; 
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+    a:hover {
+        color: #388185; 
+        text-decoration: underline;
+    }
+
+/* ---------- Botones ---------- */
+.btn-primary {
+    background-color: #A3C293; 
+    border-color: #88B04B;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px;
+}
+
+    .btn-primary:hover {
+        background-color: #88B04B; 
+        border-color: #6D8C3E;
+    }
+
+.btn-danger {
+    background-color: #D77A61; 
+    border-color: #C55C48;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px;
+}
+
+    .btn-danger:hover {
+        background-color: #C55C48;
+        border-color: #A54436;
+    }
+
+/* ---------- Formularios ---------- */
+form {
+    background-color: #ffffff;
+    border: 1px solid #D5D8D6; 
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(136, 176, 75, 0.1);
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    color: #333333;
+    font-weight: 500;
+}
+
+.form-control {
+    border: 1px solid #D5D8D6;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #FAFAF9;
+    color: #333333;
+}
+
+    .form-control:focus {
+        border-color: #88B04B;
+        box-shadow: 0 0 5px rgba(136, 176, 75, 0.4);
+        outline: none;
+    }
+
+/* ---------- Tablas ---------- */
+table.table {
+    background-color: #ffffff;
+    border: 1px solid #D5D8D6;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(213, 216, 214, 0.2);
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    table.table thead {
+        background-color: #E9EFEA;
+        color: #333333;
+    }
+
+    table.table tbody tr:hover {
+        background-color: #F0F4EE; 
+    }
+
+    table.table td,
+    table.table th {
+        padding: 12px;
+        border: 1px solid #E0E0DE;
+        text-align: left;
+    }
+
+/* ---------- Mensajes y Estados ---------- */
+.text-danger {
+    color: #D77A61;
+    font-size: 0.9em;
+}
+
+.text-success {
+    color: #88B04B; 
+    font-size: 0.9em;
+}
+
+div#mensaje {
+    color: #333333;
+    background-color: #E9EFEA;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 15px;
+}
+
+/* Clase para el contenedor del enlace */
+.logo-link {
+    display: inline-block; /* Para que el enlace sea un bloque en línea */
+}
+
+/* Clase para la imagen */
+.logo-img {
+    width: 350px; /* Ajusta el tamaño de la imagen a 100px de ancho */
+    height: auto; /* Mantiene la proporción de la imagen */
+    max-width: 100%; /* Hace que la imagen no se sobrepase en su contenedor */
+}
+
+.block-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .block-card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
