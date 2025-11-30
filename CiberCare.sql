@@ -294,7 +294,7 @@ go
 CREATE OR ALTER PROCEDURE usp_listar_horarios_disponibles
 AS
 BEGIN
-    SELECT H.id_horario, H.fecha, H.hora, D.id_doctor AS doctor, D.apellido, E.id_especialidad AS especialidad
+    SELECT H.id_horario, H.fecha, H.hora, D.id_doctor AS doctor, D.apellido, H.disponible, E.id_especialidad AS especialidad
     FROM Horarios H
     INNER JOIN Doctores D ON H.id_doctor = D.id_doctor
     INNER JOIN Especialidades E ON D.id_especialidad = E.id_especialidad
@@ -304,16 +304,17 @@ GO
 exec usp_listar_horarios_disponibles
 go
 
-CREATE PROCEDURE usp_insertar_horario
+CREATE OR ALTER PROCEDURE usp_insertar_horario
     @fecha DATE,
     @hora TIME,
-    @id_doctor INT
+    @id_doctor INT,
+    @disponible BIT
 AS
 BEGIN
     IF EXISTS (SELECT 1 FROM Doctores WHERE id_doctor = @id_doctor)
     BEGIN
         INSERT INTO Horarios (fecha, hora, id_doctor, disponible)
-        VALUES (@fecha, @hora, @id_doctor, 1);
+        VALUES (@fecha, @hora, @id_doctor, @disponible);
     END
     ELSE
     BEGIN
@@ -322,7 +323,7 @@ BEGIN
 END;
 GO
 
-CREATE PROCEDURE usp_actualizar_horario
+CREATE OR ALTER PROCEDURE usp_actualizar_horario
     @id_horario INT,
     @fecha DATE,
     @hora TIME,

@@ -38,7 +38,7 @@ namespace CiberCare_Api.Controllers
             return Ok(cliente);
         }
         [HttpGet("getPorHora/{hora}")]
-        public async Task<ActionResult<Horarios>> getHorario(TimeOnly hora)
+        public async Task<ActionResult<List<Horarios>>> getHorario(TimeOnly hora)
         {
             var cliente = await Task.Run(() => new HorarioDao().getHorario(hora));
             return Ok(cliente);

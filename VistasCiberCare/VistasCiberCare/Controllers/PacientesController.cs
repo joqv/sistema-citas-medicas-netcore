@@ -1,17 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ClosedXML.Excel;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using System.Text;
-using ClosedXML.Excel;
-using System.IO;
-using VistasCiberCare.Models;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using System.IO;
+using System.Text;
+using VistasCiberCare.Models;
 
 namespace VistasCiberCare.Controllers
 {
+    [Authorize]
     public class PacientesController : Controller
     {
         public async Task<IActionResult> Index(string dni = null, int page = 1, int pageSize = 10)

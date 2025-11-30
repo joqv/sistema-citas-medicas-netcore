@@ -9,9 +9,11 @@ using VistasCiberCare.Models;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VistasCiberCare.Controllers
 {
+    [Authorize]
     public class CitasController : Controller
     {
         public async Task<IActionResult> Index(string dni = null, int page = 1, int pageSize = 10)
