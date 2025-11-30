@@ -35,7 +35,8 @@ namespace CiberCare_Api.Repository.DAO
                         hora = TimeOnly.FromTimeSpan(dr.GetTimeSpan(2)),
                         id_doctor = dr.GetInt32(3),
                         apellido = dr.GetString(4),
-                        id_especialidad = dr.GetInt32(5),
+                        disponible = dr.GetBoolean(5),
+                        id_especialidad = dr.GetInt32(6),
                     });
                 }
                 dr.Close();
@@ -55,6 +56,7 @@ namespace CiberCare_Api.Repository.DAO
                     cmd.Parameters.AddWithValue("@fecha", reg.fecha);
                     cmd.Parameters.AddWithValue("@hora", reg.hora);
                     cmd.Parameters.AddWithValue("@id_doctor", reg.id_doctor);
+                    cmd.Parameters.AddWithValue("@disponible", reg.disponible);
 
 
                     cn.Open();
@@ -130,9 +132,9 @@ namespace CiberCare_Api.Repository.DAO
                 return mensaje;
             }
         }
-        public Horarios getHorario(TimeOnly hora)
+        public IEnumerable<Horarios> getHorario(TimeOnly hora)
         {
-            return getHorario().FirstOrDefault(c => c.hora == hora);
+            return getHorario().Where(c => c.hora == hora);
         }
     }
 }

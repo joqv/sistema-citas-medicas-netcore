@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -10,36 +13,81 @@
     <link rel="stylesheet" href="~/VistasCiberCare.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <div class="sidebar d-flex flex-column" color="paleturquoise">
-        <a href="/" class="logo-link">
-            <img src="~/img/CiberCareLogo.png" alt="CiberCare Logo" class="logo-img" />
-        </a>
-        <nav class="nav flex-column">
-            <a class="nav-link" href="/Pacientes"><i class="fa-solid fa-circle-user"></i> Pacientes</a>
-            <a class="nav-link" href="/Especialidades"><i class="fa-solid fa-user-nurse"></i> Especialidades</a>
-            <a class="nav-link" href="/Doctores"><i class="fa-solid fa-stethoscope"></i> Doctores</a>
-            <a class="nav-link" href="/Horarios"><i class="fa-solid fa-calendar-days"></i> Horarios</a>
-            <a class="nav-link" href="/Citas"><i class="fa-solid fa-file-invoice"></i> Citas</a>
-        </nav>
-    </div>
-    <div class="main-content">
-        <header>
+    <div class="d-flex flex-column">
+        <header class="main-header fixed-top">
+            @{
+                // Obtener el nombre de usuario de la sesión
+                string usuarioLogeado = HttpContextAccessor.HttpContext.Session.GetString("UsuarioLogeado");
+            }
+
+            @if (!string.IsNullOrEmpty(usuarioLogeado))
+            {
+                <div class="user-info">
+                    <span class="welcome-message">¡Bienvenido, </span>
+                    <span class="username">@usuarioLogeado!</span>
+                    <a asp-controller="Admin" asp-action="Logout" class="btn btn-sm btn-outline-danger ms-3">
+                        <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="user-info">
+                    <a asp-controller="Admin" asp-action="Index" class="btn btn-sm btn-outline-primary">
+                        <i class="fa-solid fa-user"></i> Iniciar Sesión
+                    </a>
+                </div>
+            }
         </header>
-        <div class="container pt-4">
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
-        </div>
-        <footer class="border-top footer text-muted mt-5">
-            <div class="container">
-                &copy; 2025 - VistasCiberCare - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="mt-5">
+            <div class="sidebar d-flex flex-column mt-5" color="paleturquoise">
+                <a asp-controller="Home" asp-action="Index" class="logo-link">
+                    <img src="~/img/CiberCareLogo.png" alt="CiberCare Logo" class="logo-img" />
+                </a>
+                <nav class="nav flex-column">
+                    <a class="nav-link" href="/Pacientes"><i class="fa-solid fa-circle-user"></i> Pacientes</a>
+                    <a class="nav-link" href="/Especialidades"><i class="fa-solid fa-user-nurse"></i> Especialidades</a>
+                    <a class="nav-link" href="/Doctores"><i class="fa-solid fa-stethoscope"></i> Doctores</a>
+                    <a class="nav-link" href="/Horarios"><i class="fa-solid fa-calendar-days"></i> Horarios</a>
+                    <a class="nav-link" href="/Citas"><i class="fa-solid fa-file-invoice"></i> Citas</a>
+                </nav>
             </div>
-        </footer>
+            <div class="main-content">
+                <div class="container pt-4">
+                    <main role="main" class="pb-3">
+                        @RenderBody()
+                    </main>
+                </div>
+                <footer class="border-top footer text-muted mt-5">
+                    <div class="container">
+                        &copy; 2025 - VistasCiberCare - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </div>
+                </footer>
+            </div>
+        </div>
     </div>
+    
+    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+<style>
+    /* Agrega un poco de estilo CSS para la cabecera */
+    .main-header {
+        background-color: #f8f9fa; /* Color de fondo claro */
+        padding: 10px 20px;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        justify-content: flex-end; /* Alinea a la derecha */
+        align-items: center;
+    }
+
+    .user-info .username {
+        font-weight: bold;
+        color: #007bff; /* Color azul para el nombre de usuario */
+    }
+</style>
 

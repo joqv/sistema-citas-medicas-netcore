@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
 using VistasCiberCare.Models;
 
 namespace VistasCiberCare.Controllers
 {
+    [Authorize]
     public class EspecialidadesController : Controller
     {
         public async Task<IActionResult> Index(int page = 1, int pageSize = 10)

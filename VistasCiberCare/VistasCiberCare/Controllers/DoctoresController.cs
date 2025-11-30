@@ -1,13 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using VistasCiberCare.Models;
+﻿using Humanizer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using System.Text;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Humanizer;
+using Newtonsoft.Json;
+using System.Text;
+using VistasCiberCare.Models;
 
 namespace VistasCiberCare.Controllers
 {
+    [Authorize]
     public class DoctoresController : Controller
     {
 

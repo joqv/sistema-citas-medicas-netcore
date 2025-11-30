@@ -7,7 +7,7 @@ namespace CiberCare_Api.Repository.Interfaces
 
         IEnumerable<Horarios> getHorario();
         Horarios getHorario(Int32 id_horario);
-        Horarios getHorario(TimeOnly hora);
+        IEnumerable<Horarios> getHorario(TimeOnly hora);
         string insertHorarios(Horarios reg);
         string updateHorarios(Horarios reg);
         string deleteHorarios(Horarios reg);

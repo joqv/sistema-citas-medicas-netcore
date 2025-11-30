@@ -17,23 +17,32 @@
     </div>
 }
 
-form asp-action="Index" method="post">
+@* form asp-action="Index" method="post"> *@
 
-<form asp-action="Index" method="post">
-    <div class="form-group">
-        <label asp-for="usuario">Usuario</label>
-        <input asp-for="usuario" class="form-control" />
-        <span asp-validation-for="usuario" class="text-danger"></span>
-    </div>
+<div class="d-flex">
+    <form asp-action="Index" method="post" style="display: flex; flex-direction: column; width: 540px; margin: auto;">
 
-    <div class="form-group">
-        <label asp-for="contrasena">Contraseña</label>
-        <input asp-for="contrasena" type="password" class="form-control" />
-        <span asp-validation-for="contrasena" class="text-danger"></span>
-    </div>
+        <h1 class="text-center">Sistema CiberCare</h1>
+        <h2 class="text-center">Iniciar Sesión</h2>
 
-    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-</form>
+        <div class="form-group">
+            <label asp-for="usuario">Usuario</label>
+            <input asp-for="usuario" class="form-control" />
+            <span asp-validation-for="usuario" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="contrasena">Contraseña</label>
+            <input asp-for="contrasena" type="password" class="form-control" />
+            <span asp-validation-for="contrasena" class="text-danger"></span>
+        </div>
+        <br />
+
+        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+    </form>
+</div>
+
+
 
 
 

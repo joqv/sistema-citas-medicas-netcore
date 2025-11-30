@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -6,6 +7,7 @@ using VistasCiberCare.Models;
 
 namespace VistasCiberCare.Controllers
 {
+    [Authorize]
     public class LoginController : Controller
     {
         private readonly HttpClient _httpClient;
