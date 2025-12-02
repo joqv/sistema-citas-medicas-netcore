@@ -114,9 +114,14 @@ namespace CiberCare_Api.Repository.DAO
                     SqlCommand cmd = new SqlCommand("usp_eliminar_doctor", cn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@id_doctor", reg.id_doctor);
+                    //SE AGREGOOO 
+                    SqlParameter pMensaje = new SqlParameter("@mensaje", SqlDbType.VarChar, 200);
+                    pMensaje.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(pMensaje);
+
                     cn.Open();
                     int i = cmd.ExecuteNonQuery();
-                    mensaje = $"Se ha eliminado {i} Doctores(s)";
+                    mensaje = pMensaje.Value.ToString();// $"Se ha eliminado {i} Doctores(s)";
                 }
                 catch (Exception ex)
                 {
