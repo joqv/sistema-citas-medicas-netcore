@@ -171,22 +171,29 @@ CREATE TABLE Doctores (
     id_doctor INT PRIMARY KEY IDENTITY(1,1),
     nombre NVARCHAR(100),
     apellido NVARCHAR(100),
+    cmp VARCHAR(20) NOT NULL UNIQUE,
     id_especialidad INT,
     FOREIGN KEY (id_especialidad) REFERENCES Especialidades(id_especialidad)
 );
 go
 
-INSERT INTO Doctores (nombre, apellido, id_especialidad) VALUES
-('Carlos', 'Ramírez', 1), ('Elena', 'Gómez', 2), ('José', 'Martínez', 3),
-('Lucía', 'Fernández', 4), ('Marco', 'Reyes', 5),
-('Laura', 'Mendoza', 1), ('Sergio', 'Salazar', 2), ('Ana', 'Paredes', 3),
-('Daniel', 'Lozano', 4), ('Julia', 'Campos', 5);
+INSERT INTO Doctores (nombre, apellido, cmp, id_especialidad) VALUES
+('Carlos', 'Ramírez', '12345', 1), 
+('Elena', 'Gómez', '23456', 2), 
+('José', 'Martínez', '34567', 3),
+('Lucía', 'Fernández', '45678', 4), 
+('Marco', 'Reyes', '56789', 5),
+('Laura', 'Mendoza', '67890', 1), 
+('Sergio', 'Salazar', '78901', 2), 
+('Ana', 'Paredes', '89012', 3),
+('Daniel', 'Lozano', '90123', 4), 
+('Julia', 'Campos', '01234', 5);
 go
 
 CREATE OR ALTER  PROCEDURE usp_listar_doctores
 AS
 BEGIN
-    SELECT D.id_doctor, D.nombre, D.apellido, E.id_especialidad AS especialidad
+    SELECT D.id_doctor, D.nombre, D.apellido, D.cmp, E.id_especialidad AS especialidad
     FROM Doctores D
     INNER JOIN Especialidades E ON D.id_especialidad = E.id_especialidad;
 END;
@@ -195,18 +202,26 @@ GO
 CREATE PROCEDURE usp_insertar_doctor
     @nombre NVARCHAR(100),
     @apellido NVARCHAR(100),
+    @cmp VARCHAR(20),
     @id_especialidad INT
 AS
 BEGIN
-    IF EXISTS (SELECT 1 FROM Especialidades WHERE id_especialidad = @id_especialidad)
+
+    IF EXISTS (SELECT 1 FROM Doctores WHERE cmp = @cmp)
     BEGIN
-        INSERT INTO Doctores (nombre, apellido, id_especialidad)
-        VALUES (@nombre, @apellido, @id_especialidad);
+        PRINT 'El CMP ya está registrado.';
+        RETURN;
     END
-    ELSE
+
+    IF NOT EXISTS (SELECT 1 FROM Especialidades WHERE id_especialidad = @id_especialidad)
     BEGIN
         PRINT 'La especialidad especificada no existe.';
+        RETURN;
     END
+    
+    INSERT INTO Doctores (nombre, apellido, cmp, id_especialidad)
+    VALUES (@nombre, @apellido, @cmp, @id_especialidad);
+
 END;
 GO
 
@@ -214,28 +229,37 @@ CREATE PROCEDURE usp_actualizar_doctor
     @id_doctor INT,
     @nombre NVARCHAR(100),
     @apellido NVARCHAR(100),
+    @cmp VARCHAR(20),
     @id_especialidad INT
 AS
 BEGIN
     IF EXISTS (SELECT 1 FROM Doctores WHERE id_doctor = @id_doctor)
     BEGIN
-        IF EXISTS (SELECT 1 FROM Especialidades WHERE id_especialidad = @id_especialidad)
+
+        IF EXISTS (SELECT 1 FROM Doctores WHERE cmp = @cmp AND id_doctor != @id_doctor)
         BEGIN
-            UPDATE Doctores
-            SET nombre = @nombre,
-                apellido = @apellido,
-                id_especialidad = @id_especialidad
-            WHERE id_doctor = @id_doctor;
+            PRINT 'El CMP ya está registrado por otro doctor.';
+            RETURN;
         END
-        ELSE
+        
+        IF NOT EXISTS (SELECT 1 FROM Especialidades WHERE id_especialidad = @id_especialidad)
         BEGIN
             PRINT 'La especialidad indicada no existe.';
+            RETURN;
         END
+        
+        UPDATE Doctores
+        SET nombre = @nombre,
+            apellido = @apellido,
+            cmp = @cmp,
+            id_especialidad = @id_especialidad
+        WHERE id_doctor = @id_doctor;
     END
     ELSE
     BEGIN
         PRINT 'No se encontró el doctor con ese ID.';
     END
+
 END;
 GO
 
