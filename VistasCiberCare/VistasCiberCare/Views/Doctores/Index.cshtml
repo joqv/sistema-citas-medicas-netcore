@@ -38,6 +38,7 @@
                 <th>@Html.DisplayNameFor(model => model.id_doctor)</th>
                 <th>@Html.DisplayNameFor(model => model.nombre)</th>
                 <th>@Html.DisplayNameFor(model => model.apellido)</th>
+                <th>@Html.DisplayNameFor(model => model.cmp)</th>
                 <th>@Html.DisplayNameFor(model => model.id_especialidad)</th>
                 <th>Acciones</th>
             </tr>
@@ -49,6 +50,7 @@
                     <td>@Html.DisplayFor(modelItem => item.id_doctor)</td>
                     <td>@Html.DisplayFor(modelItem => item.nombre)</td>
                     <td>@Html.DisplayFor(modelItem => item.apellido)</td>
+                    <td>@Html.DisplayFor(modelItem => item.cmp)</td>
                     <td>@Html.DisplayFor(modelItem => item.id_especialidad)</td>
                     <td>
                         <a href="/Doctores/Edit/@item.id_doctor" class="btn btn-sm btn-primary me-1">
