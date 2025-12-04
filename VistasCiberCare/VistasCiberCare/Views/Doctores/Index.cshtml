@@ -3,8 +3,17 @@
 @{
     ViewData["Title"] = "Listado de Doctores";
 }
-
+<!----------------SE AGREGO----------------->
 <h1 class="mb-4">Tabla de Doctores</h1>
+
+@if (TempData["mensaje"] != null)
+{
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        @TempData["mensaje"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <a href="/Doctores/Insert" class="btn btn-info btn-lg">

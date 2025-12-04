@@ -238,21 +238,45 @@ BEGIN
     END
 END;
 GO
+---**************************************************************************
+---SE MODIFICO EL STORE PROCEDURE DE ELIMINAR DOCTOR
+--***************************************************************************
 
-CREATE PROCEDURE usp_eliminar_doctor
-    @id_doctor INT
+ALTER PROCEDURE [dbo].[usp_eliminar_doctor]
+    @id_doctor INT,
+	@mensaje   VARCHAR(200) OUTPUT
 AS
 BEGIN
     IF EXISTS (SELECT 1 FROM Doctores WHERE id_doctor = @id_doctor)
     BEGIN
+        --DELETE FROM Doctores WHERE id_doctor = @id_doctor;
+        IF EXISTS (SELECT 1 FROM Horarios WHERE id_doctor = @id_doctor)
+        BEGIN
+            -- Validar si horarios tienen citas
+            IF EXISTS (SELECT 1 FROM Citas C 
+						INNER JOIN Horarios H ON C.id_horario = H.id_horario
+						WHERE H.id_doctor = @id_doctor
+            )
+            BEGIN
+                 SET @mensaje = 'No se puede eliminar: el doctor tiene citas registradas en sus horarios.';
+                RETURN;
+            END
+
+            SET @mensaje = 'No se puede eliminar: el doctor tiene horarios y  citas registrados. Elimine primero los horarios y citas.';
+            RETURN;
+        END
+
         DELETE FROM Doctores WHERE id_doctor = @id_doctor;
+        SET @mensaje = 'Doctor eliminado correctamente.';
     END
     ELSE
     BEGIN
-        PRINT 'No se encontró el doctor con ese ID.';
+        SET @mensaje = 'No se encontró el doctor con ese ID.';
     END
 END;
 GO
+---********************************************************************************************------------
+---********************************************************************************************------------
 
 -- Tabla de Horarios
 CREATE TABLE Horarios (

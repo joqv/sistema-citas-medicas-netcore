@@ -99,11 +99,11 @@ namespace VistasCiberCare.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         string apiResponse = await response.Content.ReadAsStringAsync();
-                        mensaje = "Paciente insertado con éxito!";
+                        mensaje = "Doctor insertado con éxito!";
                     }
                     else
                     {
-                        mensaje = "Error al insertar el paciente: " + response.ReasonPhrase;
+                        mensaje = "Error al insertar el Doctor: " + response.ReasonPhrase;
                     }
                 }
             }
@@ -181,12 +181,14 @@ namespace VistasCiberCare.Controllers
 
             using (var client = new HttpClient())
             {
+                //SEAGREGO*************
                 client.BaseAddress = new Uri("https://localhost:7112/api/Doctores/");
                 HttpResponseMessage response = await client.DeleteAsync("deleteDoctores/" + id);
+                string respuestaBackend = await response.Content.ReadAsStringAsync();
 
                 if (response.IsSuccessStatusCode)
                 {
-                    mensaje = "Doctor eliminado correctamente.";
+                    mensaje = respuestaBackend;//"Doctor eliminado correctamente.";
                 }
                 else
                 {
