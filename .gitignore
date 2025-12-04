@@ -361,3 +361,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/CiberCare_Api (3)/CiberCare_Api/CiberCare_Api/appsettings.json
