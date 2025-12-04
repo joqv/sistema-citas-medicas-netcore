@@ -27,7 +27,8 @@ namespace CiberCare_Api.Repository.DAO
                         id_doctor = dr.GetInt32(0),
                         nombre = dr.GetString(1),
                         apellido = dr.GetString(2),
-                        id_especialidad = dr.GetInt32(3) 
+                        cmp = dr.GetString(3),
+                        id_especialidad = dr.GetInt32(4) 
 
                     });
                 }
@@ -53,6 +54,7 @@ namespace CiberCare_Api.Repository.DAO
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@nombre", reg.nombre);
                     cmd.Parameters.AddWithValue("@apellido", reg.apellido);
+                    cmd.Parameters.AddWithValue("@cmp", reg.cmp);
                     cmd.Parameters.AddWithValue("@id_especialidad", reg.id_especialidad);
 
 
@@ -85,6 +87,7 @@ namespace CiberCare_Api.Repository.DAO
                     cmd.Parameters.AddWithValue("@id_doctor", reg.id_doctor);
                     cmd.Parameters.AddWithValue("@nombre", reg.nombre);
                     cmd.Parameters.AddWithValue("@apellido", reg.apellido);
+                    cmd.Parameters.AddWithValue("@cmp", reg.cmp);
                     cmd.Parameters.AddWithValue("@id_especialidad", reg.id_especialidad);
 
 
