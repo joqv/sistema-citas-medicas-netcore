@@ -242,7 +242,7 @@ GO
 ---SE MODIFICO EL STORE PROCEDURE DE ELIMINAR DOCTOR
 --***************************************************************************
 
-ALTER PROCEDURE [dbo].[usp_eliminar_doctor]
+CREATE OR ALTER PROCEDURE usp_eliminar_doctor
     @id_doctor INT,
 	@mensaje   VARCHAR(200) OUTPUT
 AS
