@@ -12,47 +12,31 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/VistasCiberCare.styles.css" asp-append-version="true" />
 </head>
-
-<!--*********************se agregooo*********************************************************************************-->
-<!-- Botón flotante del Chatbot -->
-<div id="chatbot-btn">
-    <a href="https://web-chat.global.assistant.watson.appdomain.cloud/preview.html?backgroundImageURL=https%3A%2F%2Fau-syd.assistant.watson.cloud.ibm.com%2Fpublic%2Fimages%2Fupx-9f755889-73d3-4b47-be4f-d051554ca6d2%3A%3A45f6954c-379c-4dc1-9581-70e705e2ad65&integrationID=b2be3992-d345-4405-bb9e-ba9c039f4af2&region=au-syd&serviceInstanceID=9f755889-73d3-4b47-be4f-d051554ca6d2"
-       target="_blank">💬</a>
-</div>
 <style>
-    #chatbot-btn {
-        position: fixed;
-        bottom: 25px;
-        right: 25px;
-        width: 60px;
-        height: 60px;
-        background: #0066ff;
-        color: #bff;
-        border-radius: 50%;
+    /* Agrega un poco de estilo CSS para la cabecera */
+    .main-header {
+        background-color: #f8f9fa; /* Color de fondo claro */
+        padding: 10px 20px;
+        border-bottom: 1px solid #e0e0e0;
         display: flex;
-        justify-content: center;
+        justify-content: flex-end; /* Alinea a la derecha */
         align-items: center;
-        font-size: 30px;
-        cursor: pointer;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        z-index: 99999;
+    }
+
+    .user-info .username {
+        font-weight: bold;
+        color: #007bff; /* Color azul para el nombre de usuario */
+    }
+
+    #chatbot-btn a {
+        color: white;
         text-decoration: none;
     }
 
-        #chatbot-btn a {
-            color: white;
-            text-decoration: none;
-        }
+    #chatbot-btn:hover {
+        background: #004ccc;
+    }
 
-        #chatbot-btn:hover {
-            background: #004ccc;
-        }
-</style>
-<!-- Botón flotante del Chatbot -->
-<div id="chatbot-btn">
-    <a onclick="openChatbot()" style="cursor:pointer;">💬</a>
-</div>
-<style>
     #chatbot-btn {
         position: fixed;
         bottom: 25px;
@@ -72,70 +56,31 @@
         text-decoration: none;
     }
 
-        #chatbot-btn a {
-            color: white;
-            text-decoration: none;
-        }
-
-        #chatbot-btn:hover {
-            background: #004ccc;
-        }
 </style>
-<script>
-    // Abrir el chat al hacer clic en el botón
-    function openChatbot() {
-        if (window.watsonAssistantChatOptionsInstance) {
-            window.watsonAssistantChatOptionsInstance.openWindow();
-        }
-    }
-    // Configuración de tu Watson Assistant
-    window.watsonAssistantChatOptions = {
-        integrationID: "b2be3992-d345-4405-bb9e-ba9c039f4af2", // tu integration ID
-        region: "au-syd", // región del servicio
-        serviceInstanceID: "9f755889-73d3-4b47-be4f-d051554ca6d2", // tu instance ID
-        onLoad: async (instance) => {
-            window.watsonAssistantChatOptionsInstance = instance;
-            await instance.render();
-        }
-    };
-    // Cargar el script del chat
-    setTimeout(function () {
-        const t = document.createElement('script');
-        t.src = "https://web-chat.global.assistant.watson.appdomain.cloud/versions/"
-            + (window.watsonAssistantChatOptions.clientVersion || 'latest')
-            + "/WatsonAssistantChatEntry.js";
-        document.head.appendChild(t);
-    });
-</script>
-<!-- Botón flotante del Chatbot -->
-<!--******************************************************************************************************-->
-
 <body>
     <div class="d-flex flex-column">
         <header class="main-header fixed-top">
-            @{
-                // Obtener el nombre de usuario de la sesión
-                string usuarioLogeado = HttpContextAccessor.HttpContext.Session.GetString("UsuarioLogeado");
-            }
-
-            @if (!string.IsNullOrEmpty(usuarioLogeado))
-            {
-                <div class="user-info">
-                    <span class="welcome-message">¡Bienvenido, </span>
-                    <span class="username">@usuarioLogeado!</span>
-                    <a asp-controller="Admin" asp-action="Logout" class="btn btn-sm btn-outline-danger ms-3">
-                        <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
-                    </a>
-                </div>
-            }
-            else
-            {
-                <div class="user-info">
-                    <a asp-controller="Admin" asp-action="Index" class="btn btn-sm btn-outline-primary">
-                        <i class="fa-solid fa-user"></i> Iniciar Sesión
-                    </a>
-                </div>
-            }
+        @{
+            // Obtener el nombre de usuario de la sesión
+            string usuarioLogeado = HttpContextAccessor.HttpContext.Session.GetString("UsuarioLogeado");
+        } 
+        @if (!string.IsNullOrEmpty(usuarioLogeado)) {
+            <div class="user-info">
+                <span class="welcome-message">¡Bienvenido, </span>
+                <span class="username">@usuarioLogeado!</span>
+                <a asp-controller="Admin" asp-action="Logout" class="btn btn-sm btn-outline-danger ms-3">
+                    <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="user-info">
+                <a asp-controller="Admin" asp-action="Index" class="btn btn-sm btn-outline-primary">
+                    <i class="fa-solid fa-user"></i> Iniciar Sesión
+                </a>
+            </div>
+        }
         </header>
         <div class="mt-5">
             <div class="sidebar d-flex flex-column mt-5" color="paleturquoise">
@@ -164,7 +109,50 @@
             </div>
         </div>
     </div>
+
+
+    <!--*********************se agregooo*********************************************************************************-->
+    <!-- Botón flotante del Chatbot -->
+    <div id="chatbot-btn">
+        <a href="https://web-chat.global.assistant.watson.appdomain.cloud/preview.html?backgroundImageURL=https%3A%2F%2Fau-syd.assistant.watson.cloud.ibm.com%2Fpublic%2Fimages%2Fupx-9f755889-73d3-4b47-be4f-d051554ca6d2%3A%3A45f6954c-379c-4dc1-9581-70e705e2ad65&integrationID=b2be3992-d345-4405-bb9e-ba9c039f4af2&region=au-syd&serviceInstanceID=9f755889-73d3-4b47-be4f-d051554ca6d2"
+           target="_blank">💬</a>
+    </div>
+
+    <!-- Botón flotante del Chatbot -->
+    <div id="chatbot-btn">
+        <a onclick="openChatbot()" style="cursor:pointer;">💬</a>
+    </div>
     
+
+
+    <script>
+        // Abrir el chat al hacer clic en el botón
+        function openChatbot() {
+            if (window.watsonAssistantChatOptionsInstance) {
+                window.watsonAssistantChatOptionsInstance.openWindow();
+            }
+        }
+        // Configuración de tu Watson Assistant
+        window.watsonAssistantChatOptions = {
+            integrationID: "b2be3992-d345-4405-bb9e-ba9c039f4af2", // tu integration ID
+            region: "au-syd", // región del servicio
+            serviceInstanceID: "9f755889-73d3-4b47-be4f-d051554ca6d2", // tu instance ID
+            onLoad: async (instance) => {
+                window.watsonAssistantChatOptionsInstance = instance;
+                await instance.render();
+            }
+        };
+        // Cargar el script del chat
+        setTimeout(function () {
+            const t = document.createElement('script');
+            t.src = "https://web-chat.global.assistant.watson.appdomain.cloud/versions/"
+                + (window.watsonAssistantChatOptions.clientVersion || 'latest')
+                + "/WatsonAssistantChatEntry.js";
+            document.head.appendChild(t);
+        });
+    </script>
+    <!-- Botón flotante del Chatbot -->
+    <!--******************************************************************************************************-->
     
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -172,20 +160,5 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-<style>
-    /* Agrega un poco de estilo CSS para la cabecera */
-    .main-header {
-        background-color: #f8f9fa; /* Color de fondo claro */
-        padding: 10px 20px;
-        border-bottom: 1px solid #e0e0e0;
-        display: flex;
-        justify-content: flex-end; /* Alinea a la derecha */
-        align-items: center;
-    }
 
-    .user-info .username {
-        font-weight: bold;
-        color: #007bff; /* Color azul para el nombre de usuario */
-    }
-</style>
 
