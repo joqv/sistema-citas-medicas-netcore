@@ -1,0 +1,19 @@
+---poner los script sql en una nueva consulta dentro de la---
+---base de datos CiberCare---
+---Verificar la contraseña guardada---
+SELECT '[' + contrasena + ']' AS contrasena_guardada, LEN(contrasena) AS largo
+FROM Pacientes
+WHERE email = 'nuevo@example.com';
+
+---corregir la contraseña---
+UPDATE Pacientes
+SET contrasena = 'abc123'
+WHERE email = 'nuevo@example.com';
+
+---insertar al paciente nuevo correctamente---
+INSERT INTO Pacientes (dni, nombre, apellido, telefono, email, contrasena)
+VALUES ('55511122', 'Nuevo', 'Paciente', '912345678', 'nuevo@example.com', 'abc123');
+
+---confirmar que existe---
+SELECT * FROM Pacientes WHERE email = 'nuevo@example.com';
+
