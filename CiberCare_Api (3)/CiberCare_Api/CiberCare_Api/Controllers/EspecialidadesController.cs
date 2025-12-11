@@ -37,6 +37,13 @@ namespace CiberCare_Api.Controllers
             return Ok(cliente);
         }
 
+        [HttpGet("getPorNombre/{nombre}")]
+        public async Task<ActionResult<Especialidades>> getEspecialidades(string nombre)
+        {
+            var especialidad = await Task.Run(() => new EspecialidadesDao().getEspecialidades(nombre));
+            return Ok(especialidad);
+        }
+
         [HttpDelete("deleteEspecialidades/{id_especialidad}")]
 
         public async Task<ActionResult<string>> deleteEspecialidades(Int32 id_especialidad)
