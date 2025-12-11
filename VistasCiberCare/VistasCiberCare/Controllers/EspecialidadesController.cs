@@ -9,16 +9,34 @@ namespace VistasCiberCare.Controllers
     [Authorize]
     public class EspecialidadesController : Controller
     {
-        public async Task<IActionResult> Index(int page = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string nombre = null, int page = 1, int pageSize = 10)
         {
             List<Especialidades> temporal = new List<Especialidades>();
             using (var pacient = new HttpClient())
             {
-                pacient.BaseAddress = new Uri("https://localhost:7112/api/Especialidades/getEspecialidade");
-                HttpResponseMessage response = await pacient.GetAsync("getEspecialidade");
-                String apiResponse = await response.Content.ReadAsStringAsync();
-                temporal = JsonConvert.DeserializeObject<List<Especialidades>>(apiResponse).ToList();
+                pacient.BaseAddress = new Uri("https://localhost:7112/api/Especialidades/");
 
+                HttpResponseMessage response;
+
+                if (!string.IsNullOrEmpty(nombre))
+                {
+                    response = await pacient.GetAsync($"getPorNombre/{nombre}");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        var especialidad = JsonConvert.DeserializeObject<Especialidades>(apiResponse);
+                        if (especialidad != null)
+                        {
+                            temporal.Add(especialidad);
+                        }
+                    }
+                }
+                else
+                {
+                    response = await pacient.GetAsync("getEspecialidade");
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    temporal = JsonConvert.DeserializeObject<List<Especialidades>>(apiResponse).ToList();
+                }
             }
             var totalItems = temporal.Count;
             var EspecialidadesPaginados = temporal
@@ -29,9 +47,11 @@ namespace VistasCiberCare.Controllers
             ViewBag.CurrentPage = page;
             ViewBag.PageSize = pageSize;
             ViewBag.TotalItems = totalItems;
+            ViewBag.NombreBusqueda = nombre;
 
             return View(EspecialidadesPaginados);
         }
+
         public async Task<IActionResult> Insert()
         {
             return View(await Task.Run(() => new Especialidades()));

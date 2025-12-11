@@ -7,6 +7,7 @@ namespace PrimerApi.Repository.Interfaces
 
         IEnumerable<Especialidades> getEspecialidade();
         Especialidades getEspecialidades(Int32 id_especialidad);
+        Especialidades getEspecialidades(string nombre);
         string insertEspecialidades(Especialidades reg);
         string updateEspecialidades(Especialidades reg);
 

@@ -125,6 +125,12 @@ namespace PrimerApi.Repository.DAO
             }
             return mensaje;
         }
+
+        public Especialidades getEspecialidades(string nombre)
+        {
+            return getEspecialidade().FirstOrDefault(c => c.nombre == nombre);
+        }
+
     }
 
 }
