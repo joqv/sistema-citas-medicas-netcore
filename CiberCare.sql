@@ -172,37 +172,39 @@ CREATE TABLE Doctores (
     nombre NVARCHAR(100),
     apellido NVARCHAR(100),
     cmp VARCHAR(20) NOT NULL UNIQUE,
+    celular VARCHAR(15),
     id_especialidad INT,
     FOREIGN KEY (id_especialidad) REFERENCES Especialidades(id_especialidad)
 );
 go
 
-INSERT INTO Doctores (nombre, apellido, cmp, id_especialidad) VALUES
-('Carlos', 'Ramírez', '12345', 1), 
-('Elena', 'Gómez', '23456', 2), 
-('José', 'Martínez', '34567', 3),
-('Lucía', 'Fernández', '45678', 4), 
-('Marco', 'Reyes', '56789', 5),
-('Laura', 'Mendoza', '67890', 1), 
-('Sergio', 'Salazar', '78901', 2), 
-('Ana', 'Paredes', '89012', 3),
-('Daniel', 'Lozano', '90123', 4), 
-('Julia', 'Campos', '01234', 5);
+INSERT INTO Doctores (nombre, apellido, cmp, celular, id_especialidad) VALUES
+('Carlos', 'Ramírez', '12345', '987654300', 1), 
+('Elena', 'Gómez', '23456', '987654301', 2), 
+('José', 'Martínez', '34567', '987654302', 3),
+('Lucía', 'Fernández', '45678', '987654303', 4), 
+('Marco', 'Reyes', '56789', '987654304', 5),
+('Laura', 'Mendoza', '67890', '987654305', 1), 
+('Sergio', 'Salazar', '78901', '987654306', 2), 
+('Ana', 'Paredes', '89012', '987654307', 3),
+('Daniel', 'Lozano', '90123', '987654308', 4), 
+('Julia', 'Campos', '01234', '987654309', 5);
 go
 
 CREATE OR ALTER  PROCEDURE usp_listar_doctores
 AS
 BEGIN
-    SELECT D.id_doctor, D.nombre, D.apellido, D.cmp, E.id_especialidad AS especialidad
+    SELECT D.id_doctor, D.nombre, D.apellido, D.cmp, D.celular, E.id_especialidad AS especialidad
     FROM Doctores D
     INNER JOIN Especialidades E ON D.id_especialidad = E.id_especialidad;
 END;
 GO
 
-CREATE PROCEDURE usp_insertar_doctor
+CREATE OR ALTER PROCEDURE usp_insertar_doctor
     @nombre NVARCHAR(100),
     @apellido NVARCHAR(100),
     @cmp VARCHAR(20),
+    @celular VARCHAR(15),
     @id_especialidad INT
 AS
 BEGIN
@@ -219,17 +221,18 @@ BEGIN
         RETURN;
     END
     
-    INSERT INTO Doctores (nombre, apellido, cmp, id_especialidad)
-    VALUES (@nombre, @apellido, @cmp, @id_especialidad);
+    INSERT INTO Doctores (nombre, apellido, cmp, celular, id_especialidad)
+    VALUES (@nombre, @apellido, @cmp, @celular, @id_especialidad);
 
 END;
 GO
 
-CREATE PROCEDURE usp_actualizar_doctor
+CREATE OR ALTER PROCEDURE usp_actualizar_doctor
     @id_doctor INT,
     @nombre NVARCHAR(100),
     @apellido NVARCHAR(100),
     @cmp VARCHAR(20),
+    @celular VARCHAR(15),
     @id_especialidad INT
 AS
 BEGIN
@@ -252,6 +255,7 @@ BEGIN
         SET nombre = @nombre,
             apellido = @apellido,
             cmp = @cmp,
+            celular = @celular,
             id_especialidad = @id_especialidad
         WHERE id_doctor = @id_doctor;
     END
