@@ -28,7 +28,8 @@ namespace CiberCare_Api.Repository.DAO
                         nombre = dr.GetString(1),
                         apellido = dr.GetString(2),
                         cmp = dr.GetString(3),
-                        id_especialidad = dr.GetInt32(4) 
+                        celular = dr.GetString(4),
+                        id_especialidad = dr.GetInt32(5) 
 
                     });
                 }
@@ -55,6 +56,7 @@ namespace CiberCare_Api.Repository.DAO
                     cmd.Parameters.AddWithValue("@nombre", reg.nombre);
                     cmd.Parameters.AddWithValue("@apellido", reg.apellido);
                     cmd.Parameters.AddWithValue("@cmp", reg.cmp);
+                    cmd.Parameters.AddWithValue("@celular", reg.celular);
                     cmd.Parameters.AddWithValue("@id_especialidad", reg.id_especialidad);
 
 
@@ -88,6 +90,7 @@ namespace CiberCare_Api.Repository.DAO
                     cmd.Parameters.AddWithValue("@nombre", reg.nombre);
                     cmd.Parameters.AddWithValue("@apellido", reg.apellido);
                     cmd.Parameters.AddWithValue("@cmp", reg.cmp);
+                    cmd.Parameters.AddWithValue("@ceular", reg.celular);
                     cmd.Parameters.AddWithValue("@id_especialidad", reg.id_especialidad);
 
 
