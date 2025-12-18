@@ -90,7 +90,7 @@ namespace CiberCare_Api.Repository.DAO
                     cmd.Parameters.AddWithValue("@nombre", reg.nombre);
                     cmd.Parameters.AddWithValue("@apellido", reg.apellido);
                     cmd.Parameters.AddWithValue("@cmp", reg.cmp);
-                    cmd.Parameters.AddWithValue("@ceular", reg.celular);
+                    cmd.Parameters.AddWithValue("@celular", reg.celular);
                     cmd.Parameters.AddWithValue("@id_especialidad", reg.id_especialidad);
 
 
